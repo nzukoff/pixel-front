@@ -1,6 +1,5 @@
 const initialState = {
     color_options: [],
-    pixels: [],
     image_size: [], 
     button_styles: [],
     score: 0, 
@@ -17,8 +16,8 @@ const initialState = {
       case 'DO_INITIAL_FETCH_SUCCESS':
         return({
           ...state,
-          pixels: action.pixels,
           image_size: action.image_size,
+          png_data: action.png_data,
           button_styles: [],
           score: 0,
           percentage: 0,
@@ -38,10 +37,9 @@ const initialState = {
         })   
         
       case 'CHOOSE_COLOR_SUCCESS':
-        console.log("ACTION IS ", action)
         return({
           ...state,
-          pixels: action.pixels,
+          png_data: action.png_data,
           color_options: action.color_options, 
           chosen_place: action.chosen_place, 
           percentage: state.percentage + action.percentage, 

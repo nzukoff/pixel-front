@@ -4,17 +4,17 @@ export const doInitialFetch = (load_type, host, num_colors) => {
     return async (dispatch) => {
         const url = `${host}load/${load_type}/`
         const response = await axios.get(url)
-        const pixels = response.data.pixel_values
         const image_size = response.data.image_size
-        dispatch(doInitialFetchSuccess(pixels, image_size))
+        const png_data = response.data.png_data
+        dispatch(doInitialFetchSuccess(image_size, png_data))
         dispatch(getColorOptions(host, num_colors, image_size))
     }
 }
     
-export const doInitialFetchSuccess = (pixels, image_size) => ({
-    type: 'DO_INITIAL_FETCH_SUCCESS', 
-    pixels, 
-    image_size
+export const doInitialFetchSuccess = (image_size, png_data) => ({
+    type: 'DO_INITIAL_FETCH_SUCCESS',
+    image_size, 
+    png_data
 })
 
 export const getColorOptions = (host, num_colors, image_size) => {
@@ -58,15 +58,15 @@ export const chooseColor = (host, choice, image_size) => {
     return async (dispatch) => {
         const url = `${host}choose/${choice}/`
         const response = await axios.get(url)
-        const pixels = response.data.pixel_values
+        const png_data = response.data.png_data
         const color_options = response.data.color_options
         const chosen_place = response.data.chosen_place
-        dispatch(chooseColorSuccess(pixels, color_options, chosen_place))
+        dispatch(chooseColorSuccess(png_data, color_options, chosen_place))
         dispatch(setButtonStyles(choice, image_size, color_options))
     }
 }
 
-export const chooseColorSuccess = (pixels, color_options, chosen_place) => {
+export const chooseColorSuccess = (png_data, color_options, chosen_place) => {
     let percentage = 0
     let score = 0
     if (chosen_place == 1) {
@@ -75,7 +75,7 @@ export const chooseColorSuccess = (pixels, color_options, chosen_place) => {
     }
     return ({
         type: 'CHOOSE_COLOR_SUCCESS', 
-        pixels, 
+        png_data, 
         color_options, 
         chosen_place, 
         percentage, 
