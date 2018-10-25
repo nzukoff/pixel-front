@@ -8,8 +8,8 @@ const initialState = {
     button_styles: [],
     percentage: 0, 
     choices: [],
-    host: 'http://127.0.0.1:5000/'
-    // host: 'https://pixel-game-api.herokuapp.com/'
+    // host: 'http://127.0.0.1:5000/'
+    host: 'https://pixel-game-api.herokuapp.com/'
 }
   
   const rootReducer = (state = initialState, action) => {
