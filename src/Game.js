@@ -13,7 +13,7 @@ class Game extends Component {
     }
 
     componentDidMount() {
-        this.props.doInitialFetch('new', this.props.host, 15)
+        this.props.doInitialFetch('new', this.props.host, 10)
     }
 
     render() {

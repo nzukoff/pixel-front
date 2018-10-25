@@ -46,10 +46,11 @@ class Display extends Component {
                         <div className="row">
                             <div className="col">
                                 <h1 className="score display-4">{`Score: ${this.props.score}`}</h1>
+                                <ScoreBar />  
+                                <br />
                                 {
                                     this.props.chosenPlace ? <h3 className="score">{`Your guess was ${this.props.chosenPlace}${end} place`}</h3> : <div></div>
-                                }
-                                <ScoreBar />                        
+                                }                                                      
                             </div>
                         </div>
                     </div>

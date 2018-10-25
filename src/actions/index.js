@@ -2,12 +2,13 @@ import axios from 'axios'
 
 export const doInitialFetch = (load_type, host, num_colors) => {
     return async (dispatch) => {
-        const url = `${host}load/${load_type}/`
+        const url = `${host}load/${load_type}`
         const response = await axios.get(url)
         const image_size = response.data.image_size
         const png_data = response.data.png_data
+        const title = response.data.title
         dispatch(doInitialFetchSuccess(image_size, png_data))
-        dispatch(getColorOptions(host, num_colors, image_size))
+        dispatch(getColorOptions(host, num_colors, image_size, title))
     }
 }
     
@@ -17,19 +18,22 @@ export const doInitialFetchSuccess = (image_size, png_data) => ({
     png_data
 })
 
-export const getColorOptions = (host, num_colors, image_size) => {
+export const getColorOptions = (host, num_colors, image_size, title) => {
     return async (dispatch) => {
-        const url = `${host}options/${num_colors}/`
+        const url = `${host}options/${num_colors}?title=${title}`
         const response = await axios.get(url)
         const color_options = response.data.color_options
-        dispatch(getColorOptionsSuccess(color_options))
+        const labels = response.data.labels
+        dispatch(getColorOptionsSuccess(color_options, labels, title))
         dispatch(setButtonStyles(null, image_size, color_options))
     }
 }
 
-export const getColorOptionsSuccess = (color_options) => ({
+export const getColorOptionsSuccess = (color_options, labels, title) => ({
     type: 'GET_COLOR_OPTIONS_SUCCESS',
-    color_options
+    color_options, 
+    labels,
+    title
 })
 
 export const setButtonStyles = (choice, image_size, color_options) => {
@@ -54,19 +58,20 @@ export const setButtonStyles = (choice, image_size, color_options) => {
     })
 }
 
-export const chooseColor = (host, choice, image_size) => {
+export const chooseColor = (host, choice, choices, image_size, labels, title, colors) => {
     return async (dispatch) => {
-        const url = `${host}choose/${choice}/`
-        const response = await axios.get(url)
+        const url = `${host}choose/${choice}?title=${title}`
+        const response = await axios.post(url, { labels, colors, choices })
         const png_data = response.data.png_data
         const color_options = response.data.color_options
         const chosen_place = response.data.chosen_place
-        dispatch(chooseColorSuccess(png_data, color_options, chosen_place))
+        choices = response.data.choices
+        dispatch(chooseColorSuccess(png_data, color_options, chosen_place, choices))
         dispatch(setButtonStyles(choice, image_size, color_options))
     }
 }
 
-export const chooseColorSuccess = (png_data, color_options, chosen_place) => {
+export const chooseColorSuccess = (png_data, color_options, chosen_place, choices) => {
     let percentage = 0
     let score = 0
     if (chosen_place == 1) {
@@ -78,6 +83,7 @@ export const chooseColorSuccess = (png_data, color_options, chosen_place) => {
         png_data, 
         color_options, 
         chosen_place, 
+        choices,
         percentage, 
         score
     })

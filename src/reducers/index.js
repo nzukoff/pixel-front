@@ -7,6 +7,7 @@ const initialState = {
     chosen_place: 0,
     button_styles: [],
     percentage: 0, 
+    choices: [],
     // host: 'http://127.0.0.1:5000/'
     host: 'https://pixel-game-api.herokuapp.com/'
 }
@@ -27,7 +28,9 @@ const initialState = {
       case 'GET_COLOR_OPTIONS_SUCCESS':
         return({
           ...state,
-          color_options: action.color_options
+          color_options: action.color_options, 
+          labels: action.labels,
+          title: action.title
         })
 
       case 'SET_BUTTON_STYLES':
@@ -41,7 +44,8 @@ const initialState = {
           ...state,
           png_data: action.png_data,
           color_options: action.color_options, 
-          chosen_place: action.chosen_place, 
+          chosen_place: action.chosen_place,
+          choices: action.choices,
           percentage: state.percentage + action.percentage, 
           score: state.score + action.score
         })
