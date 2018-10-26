@@ -9,8 +9,9 @@ const initialState = {
     percentage: 0, 
     choices: [],
     titles: [],
-    // host: 'http://127.0.0.1:5000/'
-    host: 'https://pixel-game-api.herokuapp.com/'
+    choice_color: {},
+    host: 'http://127.0.0.1:5000/'
+    // host: 'https://pixel-game-api.herokuapp.com/'
 }
   
   const rootReducer = (state = initialState, action) => {
@@ -27,7 +28,8 @@ const initialState = {
           chosen_place: 0, 
           choices: [],
           color_options: [], 
-          labels: []
+          labels: [],
+          choice_color: {}
         })
       
       case 'GET_COLOR_OPTIONS_SUCCESS':
@@ -41,7 +43,9 @@ const initialState = {
       case 'SET_BUTTON_STYLES':
         return({
           ...state,
-          button_styles: action.button_styles
+          button_styles: action.button_styles,
+          choice_color: action.choice_color,
+          color_options: action.color_options
         })   
         
       case 'CHOOSE_COLOR_SUCCESS':

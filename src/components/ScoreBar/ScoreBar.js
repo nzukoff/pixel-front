@@ -9,7 +9,7 @@ class ScoreBar extends Component {
 
     render() {
         return (
-            <div className="ScoreBar">
+            <div className="ScoreBar VerticalStripes">
                 <Filler />
             </div>
         );

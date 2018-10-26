@@ -23,7 +23,7 @@ class Button extends Component {
         }
         return (
             <div className="Button">
-                <div style={buttonStyle} onClick={() => {this.props.chooseColor(this.props.host, this.props.place, this.props.choices, this.props.image_size, this.props.labels, this.props.title, this.props.color_options)}}></div>
+                <div style={buttonStyle} onClick={() => {this.props.chooseColor(this.props.host, this.props.place, this.props.choices, this.props.image_size, this.props.labels, this.props.title, this.props.color_options, this.props.percentage)}}></div>
             </div>
         );
     }
@@ -35,11 +35,12 @@ const mapStateToProps = state => ({
     labels: state.labels,
     title: state.title, 
     color_options: state.color_options, 
-    choices: state.choices
+    choices: state.choices,
+    percentage: state.percentage
 })
 
 const mapDispatchToProps = dispatch => ({
-    chooseColor: (host, choice, choices, image_size, labels, title, color_options) => dispatch(chooseColor(host, choice, choices, image_size, labels, title, color_options))
+    chooseColor: (host, choice, choices, image_size, labels, title, color_options, percentage) => dispatch(chooseColor(host, choice, choices, image_size, labels, title, color_options, percentage))
 })
 
 export default connect(

@@ -8,16 +8,25 @@ export const doInitialFetch = (load_type, host, num_colors, titles) => {
         const png_data = response.data.png_data
         const title = response.data.title
         titles = response.data.titles
-        dispatch(doInitialFetchSuccess(image_size, png_data, titles))
+        dispatch(doInitialFetchSuccess(image_size, png_data, titles, num_colors))
         dispatch(getColorOptions(host, num_colors, image_size, title))
     }
 }
     
-export const doInitialFetchSuccess = (image_size, png_data, titles) => ({
+export const doInitialFetchSuccess = (image_size, png_data, titles, num_colors) => ({
     type: 'DO_INITIAL_FETCH_SUCCESS',
     image_size, 
     png_data,
-    titles
+    titles,
+    meta: {
+        mixpanel: {
+            event: 'Load Game',
+            props: {
+                titles: titles,
+                difficulty: num_colors
+            }
+        }
+    }
 })
 
 export const getColorOptions = (host, num_colors, image_size, title) => {
@@ -38,10 +47,32 @@ export const getColorOptionsSuccess = (color_options, labels, title) => ({
     title
 })
 
-export const setButtonStyles = (choice, image_size, color_options) => {
+export const setButtonStyles = (choice, image_size, color_options, chosen_place) => {
     let button_dim = (image_size[0]/5)/2-2
+    let choice_color
     let button_styles = color_options.map((color, index) => {
         if (index === choice) {
+            if (chosen_place === 1){
+                choice_color = {
+                    backgroundColor: `rgb(${color})`, 
+                    padding: `${button_dim}px ${button_dim}px`,
+                    border: '1px solid rgb(0,200,83)',
+                    borderRadius: '10px',
+                    margin: '1px',
+                    display: 'inline',
+                    float:'left'
+                } 
+            } else {
+                choice_color = {
+                    backgroundColor: `rgb(${color})`, 
+                    padding: `${button_dim}px ${button_dim}px`,
+                    border: '1px solid rgb(205,208,210)',
+                    borderRadius: '10px',
+                    margin: '1px',
+                    display: 'inline',
+                    float:'left'
+                }
+            }            
             color = [236, 249, 249]
         }
         return {
@@ -54,31 +85,41 @@ export const setButtonStyles = (choice, image_size, color_options) => {
             float:'left'
         }
     })
+    color_options[choice] = [236, 249, 249]
     return ({
         type: 'SET_BUTTON_STYLES',
-        button_styles
+        button_styles,
+        choice_color,
+        color_options
     })
 }
 
-export const chooseColor = (host, choice, choices, image_size, labels, title, colors) => {
+export const chooseColor = (host, choice, choices, image_size, labels, title, color_options, percentage) => {
     return async (dispatch) => {
         const url = `${host}choose/${choice}?title=${title}`
-        const response = await axios.post(url, { labels, colors, choices })
+        const response = await axios.post(url, { labels, choices })
         const png_data = response.data.png_data
-        const color_options = response.data.color_options
         const chosen_place = response.data.chosen_place
         choices = response.data.choices
-        dispatch(chooseColorSuccess(png_data, color_options, chosen_place, choices))
-        dispatch(setButtonStyles(choice, image_size, color_options))
+        dispatch(chooseColorSuccess(png_data, chosen_place, choices, color_options, percentage))
+        dispatch(setButtonStyles(choice, image_size, color_options, chosen_place))
     }
 }
 
-export const chooseColorSuccess = (png_data, color_options, chosen_place, choices) => {
+export const chooseColorSuccess = (png_data, chosen_place, choices, color_options, current_percentage) => {
     let percentage = 0
     let score = 0
+    let win = false
+    let end = false
     if (chosen_place === 1) {
         percentage  = (100/color_options.length)
         score = 10
+    }
+    if (choices.length === color_options.length) {
+        end = true
+    }
+    if (chosen_place === 1 && current_percentage === 100-percentage) {
+        win = true
     }
     return ({
         type: 'CHOOSE_COLOR_SUCCESS', 
@@ -87,6 +128,16 @@ export const chooseColorSuccess = (png_data, color_options, chosen_place, choice
         chosen_place, 
         choices,
         percentage, 
-        score
+        score,
+        meta: {
+            mixpanel: {
+                event: 'Choose Color',
+                props: {
+                    percentage: current_percentage,
+                    win: win,
+                    end: end
+                }
+            }
+        }
     })
 }

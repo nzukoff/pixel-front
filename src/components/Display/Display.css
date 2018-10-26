@@ -9,4 +9,11 @@ button {
 .score {
     /* color:rgb(52,58,64); */
     color:rgb(108,117,125);
+    margin-left: 90px;
+    margin-top: 5px;
+}
+
+.win {
+    margin-top: 20px;
+    width: 100%
 }

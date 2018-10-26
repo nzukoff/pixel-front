@@ -5,3 +5,12 @@
     border-radius: 50px;
     border: 1px solid rgb(108,117,125);
 }
+
+/* .VerticalStripes {
+    background: repeating-linear-gradient( 
+    90deg,
+    #E6F3F3,
+    #E6F3F3 20%,
+    #dbf0f0 20%,
+    #dbf0f0 40%);
+} */
