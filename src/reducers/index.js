@@ -8,6 +8,7 @@ const initialState = {
     button_styles: [],
     percentage: 0, 
     choices: [],
+    titles: [],
     // host: 'http://127.0.0.1:5000/'
     host: 'https://pixel-game-api.herokuapp.com/'
 }
@@ -19,6 +20,7 @@ const initialState = {
           ...state,
           image_size: action.image_size,
           png_data: action.png_data,
+          titles: action.titles,
           button_styles: [],
           score: 0,
           percentage: 0,

@@ -13,11 +13,11 @@ class Display extends Component {
 
     findEnding = () => {
         let end = ''
-        if (this.props.chosenPlace == 1) {
+        if (this.props.chosenPlace === 1) {
             end = 'st'
-        } else if (this.props.chosenPlace == 2) {
+        } else if (this.props.chosenPlace === 2) {
             end = 'nd'
-        } else if (this.props.chosenPlace == 3) {
+        } else if (this.props.chosenPlace === 3) {
             end = 'rd'
         } else {
             end = 'th'
@@ -34,13 +34,13 @@ class Display extends Component {
                     <div className="container">
                         <div className="row">                            
                             <div className="col">
-                                <button type="button" className="btn btn-secondary" onClick={() => {this.props.doInitialFetch('next', this.props.host, 5)}}>Easy</button>
+                                <button type="button" className="btn btn-secondary" onClick={() => {this.props.doInitialFetch('next', this.props.host, 5, this.props.titles)}}>Easy</button>
                             </div>
                             <div className="col">
-                                <button type="button" className="btn btn-secondary" onClick={() => {this.props.doInitialFetch('next', this.props.host, 10)}}>Medium</button>
+                                <button type="button" className="btn btn-secondary" onClick={() => {this.props.doInitialFetch('next', this.props.host, 10, this.props.titles)}}>Medium</button>
                             </div>
                             <div className="col">
-                                <button type="button" className="btn btn-secondary" onClick={() => {this.props.doInitialFetch('next', this.props.host, 15)}}>Hard</button>
+                                <button type="button" className="btn btn-secondary" onClick={() => {this.props.doInitialFetch('next', this.props.host, 15, this.props.titles)}}>Hard</button>
                             </div>                       
                         </div>
                         <div className="row">
@@ -61,13 +61,14 @@ class Display extends Component {
 }
 
 const mapStateToProps = state => ({
-    host: state.host, 
+    host: state.host,
     chosenPlace: state.chosen_place, 
-    score: state.score
+    score: state.score,
+    titles: state.titles
 })
 
 const mapDispatchToProps = dispatch => ({
-    doInitialFetch: (load_type, host, num_colors) => dispatch(doInitialFetch(load_type, host, num_colors))
+    doInitialFetch: (load_type, host, num_colors, titles) => dispatch(doInitialFetch(load_type, host, num_colors, titles))
 })
 
 export default connect(

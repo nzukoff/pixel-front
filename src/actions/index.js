@@ -1,21 +1,23 @@
 import axios from 'axios'
 
-export const doInitialFetch = (load_type, host, num_colors) => {
+export const doInitialFetch = (load_type, host, num_colors, titles) => {
     return async (dispatch) => {
         const url = `${host}load/${load_type}`
-        const response = await axios.get(url)
+        const response = await axios.post(url, {titles})
         const image_size = response.data.image_size
         const png_data = response.data.png_data
         const title = response.data.title
-        dispatch(doInitialFetchSuccess(image_size, png_data))
+        titles = response.data.titles
+        dispatch(doInitialFetchSuccess(image_size, png_data, titles))
         dispatch(getColorOptions(host, num_colors, image_size, title))
     }
 }
     
-export const doInitialFetchSuccess = (image_size, png_data) => ({
+export const doInitialFetchSuccess = (image_size, png_data, titles) => ({
     type: 'DO_INITIAL_FETCH_SUCCESS',
     image_size, 
-    png_data
+    png_data,
+    titles
 })
 
 export const getColorOptions = (host, num_colors, image_size, title) => {
@@ -39,7 +41,7 @@ export const getColorOptionsSuccess = (color_options, labels, title) => ({
 export const setButtonStyles = (choice, image_size, color_options) => {
     let button_dim = (image_size[0]/5)/2-2
     let button_styles = color_options.map((color, index) => {
-        if (index == choice) {
+        if (index === choice) {
             color = [236, 249, 249]
         }
         return {
@@ -74,7 +76,7 @@ export const chooseColor = (host, choice, choices, image_size, labels, title, co
 export const chooseColorSuccess = (png_data, color_options, chosen_place, choices) => {
     let percentage = 0
     let score = 0
-    if (chosen_place == 1) {
+    if (chosen_place === 1) {
         percentage  = (100/color_options.length)
         score = 10
     }

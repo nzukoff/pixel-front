@@ -13,7 +13,8 @@ class Game extends Component {
     }
 
     componentDidMount() {
-        this.props.doInitialFetch('new', this.props.host, 10)
+        console.log("TITLES ", this.props.titles)
+        this.props.doInitialFetch('new', this.props.host, 10, this.props.titles)
     }
 
     render() {
@@ -44,11 +45,12 @@ class Game extends Component {
 
 const mapStateToProps = state => ({
     button_styles : state.button_styles,
-    host : state.host
+    host : state.host, 
+    titles : state.titles
 })
 
 const mapDispatchToProps = dispatch => ({
-    doInitialFetch: (load_type, host, num_colors) => dispatch(doInitialFetch(load_type, host, num_colors))
+    doInitialFetch: (load_type, host, num_colors, titles) => dispatch(doInitialFetch(load_type, host, num_colors, titles))
 })
 
 export default connect(

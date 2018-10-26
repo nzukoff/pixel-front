@@ -11,7 +11,7 @@ class Button extends Component {
     render() {
         let buttonStyle
         let currentBackground = this.props.buttonStyle.backgroundColor
-        if (currentBackground == 'rgb(236,249,249)' || currentBackground == 'rgb()') {
+        if (currentBackground === 'rgb(236,249,249)' || currentBackground === 'rgb()') {
             buttonStyle = {
                 ...this.props.buttonStyle,
                 border: 'none',
