@@ -29,7 +29,8 @@ const initialState = {
           choices: [],
           color_options: [], 
           labels: [],
-          choice_color: {}
+          choice_color: {},
+          chosen_ranking: 0
         })
       
       case 'GET_COLOR_OPTIONS_SUCCESS':
@@ -56,7 +57,8 @@ const initialState = {
           chosen_place: action.chosen_place,
           choices: action.choices,
           percentage: state.percentage + action.percentage, 
-          score: state.score + action.score
+          score: state.score + action.score,
+          chosen_ranking: action.chosen_ranking
         })
 
       default:

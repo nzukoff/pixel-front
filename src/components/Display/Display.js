@@ -9,15 +9,27 @@ import { doInitialFetch } from '../../actions/index'
 class Display extends Component {
     constructor(props) {
         super(props)
+
+        this.state = { highScore: 0 }
+    }
+
+    componentDidUpdate() {
+        if (this.props.score > this.state.highScore) {
+            this.updateHighScore(this.props.score)
+        }
+    }
+
+    updateHighScore = (newScore) => {
+        this.setState({highScore: newScore})
     }
 
     findEnding = () => {
         let end = ''
-        if (this.props.chosenPlace === 1) {
+        if (this.props.chosenRanking === 1) {
             end = 'st'
-        } else if (this.props.chosenPlace === 2) {
+        } else if (this.props.chosenRanking === 2) {
             end = 'nd'
-        } else if (this.props.chosenPlace === 3) {
+        } else if (this.props.chosenRanking === 3) {
             end = 'rd'
         } else {
             end = 'th'
@@ -27,7 +39,16 @@ class Display extends Component {
 
     render() {
         let end = this.findEnding()
-
+        let instructions 
+        if(this.props.choices.length === 0) {
+            if (this.props.titles.length === 1) {
+                instructions = 
+                    <div className="display-4 instructions"><h4>Score by picking the most prevalent color each turn</h4></div>
+            }
+        }
+        else {
+            instructions = <div></div>
+        }
         return (
             <div className="Display">
                 <div className="score_board">
@@ -45,17 +66,20 @@ class Display extends Component {
                         </div>
                         <div className="row">
                             <div className="col">
-                                {/* <h1 className="score display-4">{`Score: ${this.props.score}`}</h1> */}
-                                <ScoreBar />  
+                                <h1 className="score display-4">{`Score: ${this.props.score}`}</h1>
+                                { this.props.titles.length > 1 ? <h4 className="score">{`Your high score is: ${this.state.highScore}`}</h4> : <div></div> }
+                                {/* <ScoreBar />   */}                                
                                 <br />
-                                <div style={this.props.choice_color} ></div>
+                                <div style={this.props.choiceColor} ></div>
                                 {
-                                    this.props.chosenPlace ? <div><h3 className="score">{`was the ${this.props.chosenPlace}${end} most common`}</h3></div> : <div></div>
-                                    // this.props.chosenPlace ? <div><h3 className="score">{`was ${this.props.chosenPlace}${end} place`}</h3></div> : <div></div>
-                                }       
+                                    this.props.chosenRanking ? <div><h3 className="score">{`was the ${this.props.chosenRanking}${end} most common`}</h3></div> : <div></div>
+                                }
+                                <br />
+                                { this.props.chosenPlace === 1 ? <h1 className="score display-4">Score!</h1> : <div></div> }
                                 {
                                     this.props.percentage === 100 ? <img className="win" src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif"></img>: <div></div>
-                                }                                               
+                                }
+                                { instructions }
                             </div>
                         </div>
                     </div>
@@ -71,8 +95,10 @@ const mapStateToProps = state => ({
     score: state.score,
     titles: state.titles,
     buttonStyles: state.button_styles,
-    choice_color: state.choice_color,
-    percentage: state.percentage
+    choiceColor: state.choice_color,
+    percentage: state.percentage,
+    choices: state.choices,
+    chosenRanking: state.chosen_ranking
 })
 
 const mapDispatchToProps = dispatch => ({

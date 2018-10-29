@@ -100,13 +100,14 @@ export const chooseColor = (host, choice, choices, image_size, labels, title, co
         const response = await axios.post(url, { labels, choices })
         const png_data = response.data.png_data
         const chosen_place = response.data.chosen_place
+        const chosen_ranking = response.data.chosen_ranking
         choices = response.data.choices
-        dispatch(chooseColorSuccess(png_data, chosen_place, choices, color_options, percentage))
+        dispatch(chooseColorSuccess(png_data, chosen_place, choices, color_options, percentage, chosen_ranking))
         dispatch(setButtonStyles(choice, image_size, color_options, chosen_place))
     }
 }
 
-export const chooseColorSuccess = (png_data, chosen_place, choices, color_options, current_percentage) => {
+export const chooseColorSuccess = (png_data, chosen_place, choices, color_options, current_percentage, chosen_ranking) => {
     let percentage = 0
     let score = 0
     let win = false
@@ -129,6 +130,7 @@ export const chooseColorSuccess = (png_data, chosen_place, choices, color_option
         choices,
         percentage, 
         score,
+        chosen_ranking,
         meta: {
             mixpanel: {
                 event: 'Choose Color',
