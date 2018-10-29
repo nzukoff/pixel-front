@@ -66,9 +66,9 @@ class Display extends Component {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <h1 className="score display-4">{`Score: ${this.props.score}`}</h1>
+                                <h2 className="score display-4">{`Score: ${this.props.score}`}</h2>
                                 { this.props.titles.length > 1 ? <h4 className="score">{`Your high score is: ${this.state.highScore}`}</h4> : <div></div> }
-                                {/* <ScoreBar />   */}                                
+                                <ScoreBar />                                  
                                 <br />
                                 <div style={this.props.choiceColor} ></div>
                                 {
