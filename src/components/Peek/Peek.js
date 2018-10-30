@@ -40,10 +40,10 @@ class Peek extends Component {
         return (
             <div className="Peek"> 
                 <div className="row">                            
-                    <div className="col">
+                    <div className="col-xs">
                         <button type="button" className="btn btn-secondary sneak-peek" onClick={() => {this.props.sneakAPeak(this.props.sneakPeaks); this.showImage()}}>Sneak Peek</button>
                     </div>
-                    <div className="col">
+                    <div className="col-xs">
                         <div className="sneak-peaks">{`${this.props.sneakPeaks}x left`}</div>
                     </div>     
                 </div>

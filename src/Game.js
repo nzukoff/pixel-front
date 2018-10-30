@@ -22,7 +22,7 @@ class Game extends Component {
         return (
             <div className="Game">
                 <div className="row">
-                    <div className="col-4">
+                    <div className="col">
                         <Peek />
                     </div>
                         <div className="col-auto">
@@ -33,7 +33,7 @@ class Game extends Component {
                             })
                         }
                     </div>
-                    <div className="col-4">
+                    <div className="col">
                         <Display />
                     </div>
                 </div>

@@ -11,8 +11,8 @@ const initialState = {
     titles: [],
     choice_color: {},
     sneak_peaks: 3,
-    // host: 'http://127.0.0.1:5000/'
-    host: 'https://pixel-game-api.herokuapp.com/'
+    host: 'http://127.0.0.1:5000/'
+    // host: 'https://pixel-game-api.herokuapp.com/'
 }
   
   const rootReducer = (state = initialState, action) => {
