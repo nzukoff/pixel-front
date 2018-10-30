@@ -1,0 +1,20 @@
+#peek {
+    width: 50%;
+    margin-left: 50px;
+}
+
+.sneak-peek {
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+.timer {
+    margin-left: 50px;
+    color:rgb(108,117,125);
+}
+
+.sneak-peaks {
+    color:rgb(108,117,125);
+    margin-top: 18px;
+    margin-left: -75px;
+}

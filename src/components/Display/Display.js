@@ -68,18 +68,30 @@ class Display extends Component {
                             <div className="col">
                                 <h2 className="score display-4">{`Score: ${this.props.score}`}</h2>
                                 { this.props.titles.length > 1 ? <h4 className="score">{`Your high score is: ${this.state.highScore}`}</h4> : <div></div> }
-                                <ScoreBar />                                  
-                                <br />
+                                <ScoreBar />
+                            </div>
+                        </div>
+                        <br />
+                        <div className="row">
+                            <div className="col">
                                 <div style={this.props.choiceColor} ></div>
                                 {
-                                    this.props.chosenRanking ? <div><h3 className="score">{`was the ${this.props.chosenRanking}${end} most common`}</h3></div> : <div></div>
-                                }
-                                <br />
+                                    this.props.chosenRanking ? <div><h3 className="score">{`was the ${this.props.chosenRanking}${end} most`}</h3><h3 className="score">{`common`}</h3></div> : <div></div>
+                                }                                
+                            </div>
+                        </div>  
+                        <br />
+                        <div className="row">
+                            <div className="col">
                                 { this.props.chosenPlace === 1 ? <h1 className="score display-4">Score!</h1> : <div></div> }
+                                { instructions }
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
                                 {
                                     this.props.percentage === 100 ? <img className="win" src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif"></img>: <div></div>
                                 }
-                                { instructions }
                             </div>
                         </div>
                     </div>

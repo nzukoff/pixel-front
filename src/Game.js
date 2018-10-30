@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Image from './components/Image/Image'
 import Button from './components/Button/Button'
 import Display from './components/Display/Display'
+import Peek from './components/Peek/Peek'
 
 import { doInitialFetch } from './actions/index'
 
@@ -20,23 +21,21 @@ class Game extends Component {
     render() {        
         return (
             <div className="Game">
-                <div className="container">
-                    <div className="row">
-                        <div className="col">                            
-                        </div>
-                         <div className="col-auto">
-                            <Image />
-                            {
-                                this.props.button_styles.map((button_style, i) => {
-                                    return <Button key={i} place={i} buttonStyle={button_style}/>
-                                })
-                            }
-                        </div>
-                        <div className="col">
-                            <Display />
-                        </div>
+                <div className="row">
+                    <div className="col-4">
+                        <Peek />
                     </div>
-                    
+                        <div className="col-auto">
+                        <Image />
+                        {
+                            this.props.button_styles.map((button_style, i) => {
+                                return <Button key={i} place={i} buttonStyle={button_style}/>
+                            })
+                        }
+                    </div>
+                    <div className="col-4">
+                        <Display />
+                    </div>
                 </div>
             </div>
         );

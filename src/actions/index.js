@@ -143,3 +143,13 @@ export const chooseColorSuccess = (png_data, chosen_place, choices, color_option
         }
     })
 }
+
+export const sneakAPeak = (sneakPeaks) => {
+    if (sneakPeaks > 0) {
+        --sneakPeaks
+    }
+    return {
+        type: 'SNEAK_A_PEAK',
+        sneakPeaks
+    }
+}

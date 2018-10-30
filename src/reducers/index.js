@@ -10,6 +10,7 @@ const initialState = {
     choices: [],
     titles: [],
     choice_color: {},
+    sneak_peaks: 3,
     // host: 'http://127.0.0.1:5000/'
     host: 'https://pixel-game-api.herokuapp.com/'
 }
@@ -21,6 +22,7 @@ const initialState = {
           ...state,
           image_size: action.image_size,
           png_data: action.png_data,
+          og_png_data: action.png_data,
           titles: action.titles,
           button_styles: [],
           score: 0,
@@ -30,7 +32,8 @@ const initialState = {
           color_options: [], 
           labels: [],
           choice_color: {},
-          chosen_ranking: 0
+          chosen_ranking: 0,
+          sneak_peaks: 3
         })
       
       case 'GET_COLOR_OPTIONS_SUCCESS':
@@ -60,6 +63,12 @@ const initialState = {
           score: state.score + action.score,
           chosen_ranking: action.chosen_ranking
         })
+
+      case 'SNEAK_A_PEAK':
+      return({
+        ...state,
+        sneak_peaks: action.sneakPeaks
+      })
 
       default:
         return (state)
